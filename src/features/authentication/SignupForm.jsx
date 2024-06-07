@@ -3,12 +3,24 @@ import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
+import Select from "../../ui/Select";
 
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
   const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
+
+  const states = [
+    "New South Wales",
+    "Victoria",
+    "Queensland",
+    "South Australia",
+    "Western Australia",
+    "Tasmania",
+    "Northern Territory",
+    "Australian Capital Territory",
+  ];
 
   function onSubmit() {
     console.log("Submitted!");
@@ -83,6 +95,20 @@ function SignupForm() {
               value === getValues().password || "Passwords need to match",
           })}
         />
+      </FormRow>
+
+      <FormRow label='State' error={errors?.state?.message}>
+        <Select
+          id='state'
+          {...register("state", { required: "This field is required" })}
+        >
+          <option value=''>Select a state</option>
+          {states.map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </Select>
       </FormRow>
 
       <FormRow>
